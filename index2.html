@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mirra Sense - Unlock the Future of Your Skin's Secret</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #880E31;
+            --bg-dark: #5A0820;
+            --accent: #FF8A9B;
+            --accent-light: #FFB8C4;
+            --card-glass: rgba(255, 255, 255, 0.12);
+            --card-glass-border: rgba(255, 255, 255, 0.25);
+            --text-light: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --result-bg: #EBF5FF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-primary) 50%, #A01240 100%);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Glassmorphism Base */
+        .glass {
+            background: var(--card-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-glass-border);
+            border-radius: 9999px;
+        }
+
+        .glass-card {
+            background: var(--card-glass);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--card-glass-border);
+            border-radius: 24px;
+        }
+
+        /* Animated Background */
+        .bg-orbs {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #FFD700 0%, transparent 70%);
+            bottom: 20%;
+            left: -100px;
+            animation-delay: -7s;
+        }
+
+        .orb-3 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
+            bottom: -150px;
+            right: 10%;
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        /* Particle Canvas */
+        #particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        .nav-link {
+            position: relative;
+            padding: 8px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 60%;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, #FF6B82 100%);
+            padding: 16px 40px;
+            border-radius: 9999px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(255, 138, 155, 0.4);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #FFB8C4 0%, var(--accent) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(255, 138, 155, 0.5);
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-primary span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-secondary {
+            padding: 14px 32px;
+            border-radius: 9999px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid var(--card-glass-border);
+            background: var(--card-glass);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* Problem/Solution Cards */
+        .problem-card {
+            background: linear-gradient(135deg, rgba(136, 14, 49, 0.6) 0%, rgba(90, 8, 32, 0.6) 100%);
+            border: 1px solid rgba(255, 100, 100, 0.3);
+        }
+
+        .solution-card {
+            background: linear-gradient(135deg, rgba(255, 138, 155, 0.2) 0%, rgba(255, 184, 196, 0.1) 100%);
+            border: 1px solid rgba(255, 138, 155, 0.4);
+        }
+
+        /* Tech Diagram */
+        .tech-ring {
+            position: absolute;
+            border: 2px solid rgba(255, 138, 155, 0.3);
+            border-radius: 50%;
+            animation: pulse-ring 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse-ring {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, rgba(136, 14, 49, 0.95) 0%, rgba(90, 8, 32, 0.98) 100%);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--card-glass-border);
+            border-radius: 32px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modal-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes modal-in {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Camera Interface */
+        .camera-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: #000;
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        .camera-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .scan-line {
+            position: absolute;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            box-shadow: 0 0 20px var(--accent);
+            animation: scan 2s ease-in-out infinite;
+        }
+
+        @keyframes scan {
+            0%, 100% { top: 10%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 90%; opacity: 0; }
+        }
+
+        .corner-bracket {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--accent);
+        }
+
+        .corner-bracket.tl { top: 15%; left: 10%; border-right: none; border-bottom: none; }
+        .corner-bracket.tr { top: 15%; right: 10%; border-left: none; border-bottom: none; }
+        .corner-bracket.bl { bottom: 20%; left: 10%; border-right: none; border-top: none; }
+        .corner-bracket.br { bottom: 20%; right: 10%; border-left: none; border-top: none; }
+
+        /* Result Page */
+        .result-container {
+            background: var(--result-bg);
+            color: var(--text-dark);
+        }
+
+        .score-ring {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: conic-gradient(var(--accent) 0deg, var(--accent) calc(var(--score) * 3.6deg), #E0E0E0 calc(var(--score) * 3.6deg));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .score-ring::before {
+            content: '';
+            position: absolute;
+            inset: 12px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .score-value {
+            position: relative;
+            z-index: 1;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--bg-primary);
+        }
+
+        /* Input Styles */
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Orbs -->
+    <div class="bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Particle Canvas -->
+    <canvas id="particles"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 p-4 md:p-6">
+        <div class="glass max-w-6xl mx-auto px-6 py-3 flex items-center justify-between">
+            <a href="#" class="font-display text-xl font-bold tracking-wide">
+                <span class="text-white">Mirra</span><span style="color: var(--accent)">Sense</span>
+            </a>
+            <div class="hidden md:flex items-center gap-2">
+                <a href="#problem" class="nav-link text-sm text-white/80 hover:text-white">Masalah</a>
+                <a href="#technology" class="nav-link text-sm text-white/80 hover:text-white">Teknologi</a>
+                <a href="#benefits" class="nav-link text-sm text-white/80 hover:text-white">Keunggulan</a>
+                <a href="#authority" class="nav-link text-sm text-white/80 hover:text-white">Riset</a>
+            </div>
+            <button onclick="openModal('consent')" class="btn-secondary text-sm hidden md:block">
+                Coba Sekarang
+            </button>
+            <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center px-4 pt-24 pb-16">
+        <div class="max-w-6xl mx-auto text-center relative z-10">
+            <div class="reveal">
+                <span class="inline-block glass px-6 py-2 text-sm font-medium mb-8" style="color: var(--accent-light)">
+                    AI-Powered Skin Analysis
+                </span>
+            </div>
+            
+            <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6 reveal reveal-delay-1">
+                Unlock the Future of<br>
+                <span style="color: var(--accent)">Your Skin's Secret</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-white/70 max-w-2xl mx-auto mb-10 reveal reveal-delay-2">
+                Temukan kecantikan personal yang sebenarnya dengan teknologi AI sensor yang menganalisis kondisi kulit Anda secara mendalam dan akurat.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal reveal-delay-3">
+                <button onclick="openModal('consent')" class="btn-primary text-white">
+                    <span>Scan Kulitmu Sekarang</span>
+                </button>
+                <a href="#technology" class="btn-secondary text-white flex items-center gap-2">
+                    Pelajari Teknologi
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Hero Visual -->
+            <div class="mt-16 reveal reveal-delay-4">
+                <div class="relative inline-block">
+                    <div class="glass-card p-8 md:p-12">
+                        <div class="relative w-64 h-64 md:w-80 md:h-80 mx-auto">
+                            <!-- Animated rings -->
+                            <div class="tech-ring inset-0" style="animation-delay: 0s;"></div>
+                            <div class="tech-ring inset-4" style="animation-delay: 0.5s;"></div>
+                            <div class="tech-ring inset-8" style="animation-delay: 1s;"></div>
+                            
+                            <!-- Center glow -->
+                            <div class="absolute inset-12 rounded-full" style="background: radial-gradient(circle, var(--accent) 0%, transparent 70%); opacity: 0.6;"></div>
+                            
+                            <!-- Face silhouette -->
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <svg width="120" height="150" viewBox="0 0 120 150" fill="none">
+                                    <ellipse cx="60" cy="70" rx="45" ry="60" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="none"/>
+                                    <circle cx="42" cy="55" r="4" fill="rgba(255,138,155,0.8)"/>
+                                    <circle cx="78" cy="55" r="4" fill="rgba(255,138,155,0.8)"/>
+                                    <path d="M50 85 Q60 95 70 85" stroke="rgba(255,138,155,0.6)" stroke-width="2" fill="none"/>
+                                </svg>
+                            </div>
+
+                            <!-- Scanning dots -->
+                            <div class="absolute top-4 left-1/2 w-3 h-3 rounded-full animate-ping" style="background: var(--accent);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem vs Solution -->
+    <section id="problem" class="py-24 px-4 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <span class="inline-block glass px-5 py-2 text-sm mb-4" style="color: var(--accent-light);">Masalah dan Solusi</span>
+                <h2 class="font-display text-3xl md:text-5xl font-bold">
+                    Kecantikan yang Terpersonalisasi
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Problems -->
+                <div class="reveal reveal-delay-1">
+                    <div class="glass-card problem-card p-8 h-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: rgba(255,100,100,0.2);">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF6B6B" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <line x1="15" y1="9" x2="9" y2="15"/>
+                                    <line x1="9" y1="9" x2="15" y2="15"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-display text-2xl font-semibold">Tantangan Umum</h3>
+                        </div>
+                        
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <span class="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-xs mt-0.5" style="background: rgba(255,100,100,0.3);">1</span>
+                                <div>
+                                    <p class="font-medium">Produk yang Tidak Tepat</p>
+                                    <p class="text-white/60 text-sm">Membeli produk skincare tanpa memahami kebutuhan kulit yang sebenarnya</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-xs mt-0.5" style="background: rgba(255,100,100,0.3);">2</span>
+                                <div>
+                                    <p class="font-medium">Minim Kesadaran Kondisi Kulit</p>
+                                    <p class="text-white/60 text-sm">Tidak mengetahui masalah kulit secara spesifik: jerawat, hiperpigmentasi, atau dehidrasi</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-xs mt-0.5" style="background: rgba(255,100,100,0.3);">3</span>
+                                <div>
+                                    <p class="font-medium">Rutin yang Tidak Terukur</p>
+                                    <p class="text-white/60 text-sm">Tidak ada tracking progres sehingga tidak tahu efektivitas treatment</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Solutions -->
+                <div class="reveal reveal-delay-2">
+                    <div class="glass-card solution-card p-8 h-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: rgba(255,138,155,0.3);">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                    <polyline points="22 4 12 14.01 9 11.01"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-display text-2xl font-semibold">Solusi Mirra Sense</h3>
+                        </div>
+                        
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <span class="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-xs mt-0.5" style="background: var(--accent); color: var(--bg-primary);">1</span>
+                                <div>
+                                    <p class="font-medium">Analisis AI Presisi Tinggi</p>
+                                    <p class="text-white/70 text-sm">Sensor AI memindai 12 parameter kulit dengan akurasi hingga 95%</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-xs mt-0.5" style="background: var(--accent); color: var(--bg-primary);">2</span>
+                                <div>
+                                    <p class="font-medium">Rekomendasi Personal</p>
+                                    <p class="text-white/70 text-sm">Product matching berdasarkan kondisi kulit unik Anda</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-xs mt-0.5" style="background: var(--accent); color: var(--bg-primary);">3</span>
+                                <div>
+                                    <p class="font-medium">Dashboard Progres Real-time</p>
+                                    <p class="text-white/70 text-sm">Visualisasi perubahan kulit dari waktu ke waktu</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="technology" class="py-24 px-4 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <span class="inline-block glass px-5 py-2 text-sm mb-4" style="color: var(--accent-light);">Teknologi Inti</span>
+                <h2 class="font-display text-3xl md:text-5xl font-bold mb-4">
+                    Sensor AI Canggih
+                </h2>
+                <p class="text-white/60 max-w-2xl mx-auto">
+                    Ditenagai oleh algoritma deep learning yang dilatih dengan jutaan data kulit untuk akurasi maksimal
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass-card p-8 text-center reveal reveal-delay-1 group hover:scale-105 transition-transform duration-300">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, var(--accent) 0%, #FF6B82 100%);">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold mb-3">Scan Multispektral</h3>
+                    <p class="text-white/60 text-sm">Analisis lapisan kulit hingga dermis dengan teknologi spektral canggih</p>
+                </div>
+
+                <div class="glass-card p-8 text-center reveal reveal-delay-2 group hover:scale-105 transition-transform duration-300">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, var(--accent) 0%, #FF6B82 100%);">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold mb-3">Deep Learning Engine</h3>
+                    <p class="text-white/60 text-sm">Model AI yang terus belajar dari 10 juta+ data kulit pengguna</p>
+                </div>
+
+                <div class="glass-card p-8 text-center reveal reveal-delay-3 group hover:scale-105 transition-transform duration-300">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, var(--accent) 0%, #FF6B82 100%);">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold mb-3">Real-time Analysis</h3>
+                    <p class="text-white/60 text-sm">Hasil analisis dalam hitungan detik, bukan menit atau jam</p>
+                </div>
+            </div>
+
+            <!-- Tech Stats -->
+            <div class="mt-16 glass-card p-8 md:p-12 reveal">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div>
+                        <p class="font-display text-4xl md:text-5xl font-bold" style="color: var(--accent);">95%</p>
+                        <p class="text-white/60 text-sm mt-2">Akurasi Deteksi</p>
+                    </div>
+                    <div>
+                        <p class="font-display text-4xl md:text-5xl font-bold" style="color: var(--accent);">12</p>
+                        <p class="text-white/60 text-sm mt-2">Parameter Kulit</p>
+                    </div>
+                    <div>
+                        <p class="font-display text-4xl md:text-5xl font-bold" style="color: var(--accent);">3s</p>
+                        <p class="text-white/60 text-sm mt-2">Waktu Analisis</p>
+                    </div>
+                    <div>
+                        <p class="font-display text-4xl md:text-5xl font-bold" style="color: var(--accent);">50K+</p>
+                        <p class="text-white/60 text-sm mt-2">Pengguna Aktif</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="py-24 px-4 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <span class="inline-block glass px-5 py-2 text-sm mb-4" style="color: var(--accent-light);">Keunggulan</span>
+                <h2 class="font-display text-3xl md:text-5xl font-bold">
+                    Mengapa Mirra Sense?
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass-card p-8 reveal reveal-delay-1">
+                    <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6" style="background: rgba(255,138,155,0.2);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold mb-3">Personalisasi Maksimal</h3>
+                    <p class="text-white/60">Rekomendasi produk yang disesuaikan dengan profil kulit unik Anda, bukan solusi generik.</p>
+                </div>
+
+                <div class="glass-card p-8 reveal reveal-delay-2">
+                    <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6" style="background: rgba(255,138,155,0.2);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                            <line x1="18" y1="20" x2="18" y2="10"/>
+                            <line x1="12" y1="20" x2="12" y2="4"/>
+                            <line x1="6" y1="20" x2="6" y2="14"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold mb-3">Tracking Progres</h3>
+                    <p class="text-white/60">Pantau perkembangan kesehatan kulit Anda dari waktu ke waktu dengan visualisasi yang jelas.</p>
+                </div>
+
+                <div class="glass-card p-8 reveal reveal-delay-3">
+                    <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6" style="background: rgba(255,138,155,0.2);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold mb-3">Edukasi Ingredients</h3>
+                    <p class="text-white/60">Pelajari bahan aktif yang cocok untuk kulit Anda dan mengapa rekomendasi tersebut diberikan.</p>
+                </div>
+
+                <div class="glass-card p-8 reveal reveal-delay-1">
+                    <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6" style="background: rgba(255,138,155,0.2);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold mb-3">Privasi Terjamin</h3>
+                    <p class="text-white/60">Data kulit Anda dienkripsi dan tidak akan dibagikan ke pihak ketiga tanpa izin.</p>
+                </div>
+
+                <div class="glass-card p-8 reveal reveal-delay-2">
+                    <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6" style="background: rgba(255,138,155,0.2);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold mb-3">Dermatologist Approved</h3>
+                    <p class="text-white/60">Algoritma dikembangkan bersama dokter kulit bersertifikat untuk hasil yang terpercaya.</p>
+                </div>
+
+                <div class="glass-card p-8 reveal reveal-delay-3">
+                    <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6" style="background: rgba(255,138,155,0.2);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold mb-3">Update Berkala</h3>
+                    <p class="text-white/60">Model AI terus diperbarui dengan data terbaru untuk akurasi yang selalu meningkat.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Authority -->
+    <section id="authority" class="py-24 px-4 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <div class="glass-card p-8 md:p-16 reveal">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <span class="inline-block glass px-5 py-2 text-sm mb-4" style="color: var(--accent-light);">Data Pasar</span>
+                        <h2 class="font-display text-3xl md:text-4xl font-bold mb-6">
+                            Urgensi Solusi Digital untuk Kecantikan
+                        </h2>
+                        <p class="text-white/60 mb-8">
+                            Industri beauty tech berkembang pesat. Mirra Sense hadir di momen yang tepat untuk menjawab kebutuhan konsumen modern yang menginginkan personalisasi.
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span>Global Beauty Tech Market 2025</span>
+                                    <span style="color: var(--accent);">$89.5B</span>
+                                </div>
+                                <div class="h-2 rounded-full overflow-hidden" style="background: rgba(255,255,255,0.1);">
+                                    <div class="h-full rounded-full" style="width: 85%; background: linear-gradient(90deg, var(--accent), var(--accent-light));"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span>Konsumen ingin personalisasi</span>
+                                    <span style="color: var(--accent);">78%</span>
+                                </div>
+                                <div class="h-2 rounded-full overflow-hidden" style="background: rgba(255,255,255,0.1);">
+                                    <div class="h-full rounded-full" style="width: 78%; background: linear-gradient(90deg, var(--accent), var(--accent-light));"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span>Kenaikan minat AI skincare</span>
+                                    <span style="color: var(--accent);">340%</span>
+                                </div>
+                                <div class="h-2 rounded-full overflow-hidden" style="background: rgba(255,255,255,0.1);">
+                                    <div class="h-full rounded-full" style="width: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-light));"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="aspect-square rounded-3xl overflow-hidden" style="background: linear-gradient(145deg, rgba(255,138,155,0.3) 0%, rgba(136,14,49,0.5) 100%);">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="text-center p-8">
+                                    <p class="font-display text-6xl md:text-7xl font-bold" style="color: var(--accent);">67%</p>
+                                    <p class="text-white/80 mt-4">pengguna skincare mengaku membeli produk yang tidak cocok setidaknya sekali dalam setahun</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating badge -->
+                        <div class="absolute -top-4 -right-4 glass px-4 py-2 rounded-full">
+                            <p class="text-sm font-medium">Source: McKinsey 2024</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 px-4 relative z-10">
+        <div class="max-w-4xl mx-auto text-center reveal">
+            <h2 class="font-display text-3xl md:text-5xl font-bold mb-6">
+                Siap Mengenal Kulitmu Lebih Dalam?
+            </h2>
+            <p class="text-white/60 text-lg mb-10 max-w-2xl mx-auto">
+                Bergabung dengan 50,000+ pengguna yang telah menemukan rutinitas skincare yang tepat bersama Mirra Sense.
+            </p>
+            <button onclick="openModal('consent')" class="btn-primary text-white text-lg">
+                <span>Mulai Scan Gratis</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 border-t border-white/10 relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="font-display text-xl font-bold">
+                    <span class="text-white">Mirra</span><span style="color: var(--accent)">Sense</span>
+                </div>
+                <div class="flex items-center gap-6 text-white/60 text-sm">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition-colors">Contact</a>
+                </div>
+                <p class="text-white/40 text-sm">2025 Mirra Sense. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal: Consent -->
+    <div id="modal-consent" class="modal-overlay">
+        <div class="modal-content p-8">
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: rgba(255,138,155,0.2);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                </div>
+                <h3 class="font-display text-2xl font-bold mb-3">Syarat dan Ketentuan</h3>
+                <p class="text-white/60 text-sm">Sebelum memulai scan, kami perlu persetujuan Anda untuk memproses data kulit secara aman.</p>
+            </div>
+            
+            <div class="space-y-4 mb-8">
+                <label class="flex items-start gap-3 cursor-pointer">
+                    <input type="checkbox" id="consent-data" class="mt-1 w-5 h-5 rounded" style="accent-color: var(--accent);">
+                    <span class="text-sm text-white/80">Saya menyetujui penggunaan foto kulit saya untuk keperluan analisis AI Mirra Sense.</span>
+                </label>
+                <label class="flex items-start gap-3 cursor-pointer">
+                    <input type="checkbox" id="consent-privacy" class="mt-1 w-5 h-5 rounded" style="accent-color: var(--accent);">
+                    <span class="text-sm text-white/80">Saya telah membaca dan menyetujui <a href="#" style="color: var(--accent);">Kebijakan Privasi</a>.</span>
+                </label>
+            </div>
+            
+            <div class="flex gap-4">
+                <button onclick="closeModal('consent')" class="btn-secondary flex-1 text-white">Batal</button>
+                <button onclick="acceptConsent()" class="btn-primary flex-1 text-white"><span>Setuju dan Lanjutkan</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Camera -->
+    <div id="modal-camera" class="modal-overlay">
+        <div class="modal-content p-6 md:p-8 max-w-lg">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="font-display text-xl font-bold">Pindai Kulit Anda</h3>
+                <button onclick="closeModal('camera')" class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="camera-container mb-6">
+                <video id="camera-feed" autoplay playsinline class="w-full h-full object-cover"></video>
+                
+                <!-- Camera Overlay -->
+                <div class="camera-overlay">
+                    <div class="scan-line"></div>
+                    <div class="corner-bracket tl"></div>
+                    <div class="corner-bracket tr"></div>
+                    <div class="corner-bracket bl"></div>
+                    <div class="corner-bracket br"></div>
+                    
+                    <div class="absolute top-4 left-4 glass px-3 py-1 text-xs">
+                        <span class="animate-pulse" style="color: var(--accent);">Mendeteksi wajah...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <p class="text-white/60 text-sm mb-4">Posisikan wajah Anda di tengah frame</p>
+                <button onclick="captureImage()" class="w-16 h-16 rounded-full mx-auto flex items-center justify-center transition-transform hover:scale-110" style="background: var(--accent);">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <circle cx="12" cy="12" r="4"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Form (Lead Magnet) -->
+    <div id="modal-form" class="modal-overlay">
+        <div class="modal-content p-8 max-w-md">
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center" style="background: rgba(255,138,155,0.2);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                    </svg>
+                </div>
+                <h3 class="font-display text-2xl font-bold mb-3">Hampir Selesai!</h3>
+                <p class="text-white/60 text-sm">Masukkan data Anda untuk mendapatkan hasil analisis kulit yang telah kami siapkan.</p>
+            </div>
+            
+            <form id="lead-form" class="space-y-4 mb-6">
+                <input type="text" placeholder="Nama Lengkap" required class="form-input">
+                <input type="email" placeholder="Email" required class="form-input">
+                <input type="tel" placeholder="Nomor WhatsApp" required class="form-input">
+            </form>
+            
+            <button onclick="submitForm()" class="btn-primary w-full text-white">
+                <span>Lihat Hasil Analisis</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal: Results -->
+    <div id="modal-result" class="modal-overlay">
+        <div class="modal-content result-container p-8 max-w-lg">
+            <div class="text-center mb-8">
+                <h3 class="font-display text-2xl font-bold mb-2" style="color: var(--bg-primary);">Hasil Analisis Kulit Anda</h3>
+                <p class="text-gray-600 text-sm">Berdasarkan pemindaian AI Mirra Sense</p>
+            </div>
+            
+            <!-- Score Circle -->
+            <div class="flex justify-center mb-8">
+                <div class="score-ring" style="--score: 72;">
+                    <span class="score-value">72</span>
+                </div>
+            </div>
+            
+            <div class="text-center mb-8">
+                <p class="text-lg font-semibold" style="color: var(--bg-primary);">Kondisi Kulit: Baik</p>
+                <p class="text-gray-500 text-sm">Ada beberapa area yang bisa ditingkatkan</p>
+            </div>
+            
+            <!-- Analysis Details -->
+            <div class="space-y-4 mb-8">
+                <div class="bg-white rounded-2xl p-4 border border-gray-100">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-medium" style="color: var(--bg-primary);">Hidrasi</span>
+                        <span class="text-sm" style="color: var(--accent);">68%</span>
+                    </div>
+                    <div class="h-2 rounded-full overflow-hidden bg-gray-200">
+                        <div class="h-full rounded-full" style="width: 68%; background: var(--accent);"></div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-4 border border-gray-100">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-medium" style="color: var(--bg-primary);">Elastisitas</span>
+                        <span class="text-sm" style="color: var(--accent);">82%</span>
+                    </div>
+                    <div class="h-2 rounded-full overflow-hidden bg-gray-200">
+                        <div class="h-full rounded-full" style="width: 82%; background: var(--accent);"></div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-4 border border-gray-100">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-medium" style="color: var(--bg-primary);">Minyak</span>
+                        <span class="text-sm" style="color: var(--accent);">55%</span>
+                    </div>
+                    <div class="h-2 rounded-full overflow-hidden bg-gray-200">
+                        <div class="h-full rounded-full" style="width: 55%; background: var(--accent);"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recommendations -->
+            <div class="bg-gradient-to-r from-pink-50 to-blue-50 rounded-2xl p-6 mb-6">
+                <h4 class="font-semibold mb-3" style="color: var(--bg-primary);">Rekomendasi Kami</h4>
+                <ul class="space-y-2 text-sm text-gray-700">
+                    <li class="flex items-start gap-2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" class="mt-0.5 flex-shrink-0">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        <span>Tambahkan hyaluronic acid untuk meningkatkan hidrasi</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" class="mt-0.5 flex-shrink-0">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        <span>Gunakan sunscreen SPF 30+ setiap hari</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" class="mt-0.5 flex-shrink-0">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        <span>Pertimbangkan retinol untuk anti-aging preventif</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="flex gap-4">
+                <button onclick="closeModal('result')" class="flex-1 py-3 px-6 rounded-full border border-gray-300 text-gray-600 hover:bg-gray-50 transition-colors">
+                    Tutup
+                </button>
+                <button class="flex-1 py-3 px-6 rounded-full text-white transition-transform hover:scale-105" style="background: var(--bg-primary);">
+                    Download Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize particles
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let animationId = null;
+        let prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createParticles() {
+            particles = [];
+            const particleCount = prefersReducedMotion ? 0 : Math.min(80, Math.floor(window.innerWidth / 20));
+            
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.max(0.5, Math.random() * 2 + 0.5),
+                    speedX: (Math.random() - 0.5) * 0.3,
+                    speedY: (Math.random() - 0.5) * 0.3,
+                    opacity: Math.random() * 0.5 + 0.2
+                });
+            }
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 138, 155, ${p.opacity})`;
+                ctx.fill();
+                
+                // Update position
+                p.x += p.speedX;
+                p.y += p.speedY;
+                
+                // Wrap around edges
+                if (p.x < 0) p.x = canvas.width;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.y > canvas.height) p.y = 0;
+            });
+            
+            if (!prefersReducedMotion) {
+                animationId = requestAnimationFrame(drawParticles);
+            }
+        }
+
+        // Initialize
+        resizeCanvas();
+        createParticles();
+        if (!prefersReducedMotion) {
+            drawParticles();
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            createParticles();
+        });
+
+        // Scroll Reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        revealElements.forEach(el => observer.observe(el));
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Modal Functions
+        function openModal(modalName) {
+            document.getElementById(`modal-${modalName}`).classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            if (modalName === 'camera') {
+                startCamera();
+            }
+        }
+
+        function closeModal(modalName) {
+            document.getElementById(`modal-${modalName}`).classList.remove('active');
+            document.body.style.overflow = '';
+            
+            if (modalName === 'camera') {
+                stopCamera();
+            }
+        }
+
+        // Camera Functions
+        let stream = null;
+
+        function startCamera() {
+            navigator.mediaDevices.getUserMedia({ 
+                video: { 
+                    facingMode: 'user',
+                    width: { ideal: 640 },
+                    height: { ideal: 480 }
+                } 
+            })
+            .then(s => {
+                stream = s;
+                const video = document.getElementById('camera-feed');
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                console.error('Camera access denied:', err);
+                alert('Tidak dapat mengakses kamera. Pastikan izin kamera diberikan.');
+                closeModal('camera');
+            });
+        }
+
+        function stopCamera() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+            }
+        }
+
+        function captureImage() {
+            // Simulate capture
+            const video = document.getElementById('camera-feed');
+            
+            // Visual feedback
+            const overlay = document.querySelector('.camera-overlay');
+            overlay.style.background = 'rgba(255,255,255,0.3)';
+            
+            setTimeout(() => {
+                overlay.style.background = '';
+                stopCamera();
+                closeModal('camera');
+                openModal('form');
+            }, 500);
+        }
+
+        // Consent Flow
+        function acceptConsent() {
+            const consentData = document.getElementById('consent-data').checked;
+            const consentPrivacy = document.getElementById('consent-privacy').checked;
+            
+            if (!consentData || !consentPrivacy) {
+                alert('Mohon setujui semua persyaratan untuk melanjutkan.');
+                return;
+            }
+            
+            closeModal('consent');
+            openModal('camera');
+        }
+
+        // Form Submission
+        function submitForm() {
+            const form = document.getElementById('lead-form');
+            const inputs = form.querySelectorAll('input');
+            let valid = true;
+            
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    valid = false;
+                    input.style.borderColor = '#FF6B6B';
+                } else {
+                    input.style.borderColor = '';
+                }
+            });
+            
+            if (!valid) {
+                alert('Mohon lengkapi semua data.');
+                return;
+            }
+            
+            // Simulate processing
+            closeModal('form');
+            
+            // Show result after brief delay
+            setTimeout(() => {
+                openModal('result');
+            }, 300);
+        }
+
+        // Mobile Menu (simple toggle)
+        function toggleMobileMenu() {
+            // For simplicity, just scroll to hero
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Close modal on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    const modalName = modal.id.replace('modal-', '');
+                    closeModal(modalName);
+                }
+            });
+        });
+
+        // Keyboard accessibility
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+                    const modalName = modal.id.replace('modal-', '');
+                    closeModal(modalName);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
